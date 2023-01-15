@@ -1,3 +1,5 @@
+var results = [];
+
 function startListening(){
     //if (document.getElementById("op_cont").checked === true) {
         console.log("It's continuous");
@@ -45,9 +47,15 @@ recog.onresult = function(event) {
 var resultText = "";
 for (let i = 0; i < event.results.length; i++){
     if(event.results[i].isFinal) {
-        resultText += event.results[i][0].transcript;
+        results.push(event.results[i][0].transcript);
+        //resultText += event.results[i][0].transcript;
     }
 }
+for (let i = 0; i < results.length; i++) {
+    out1.innerHTML += "<p>" + results[i] + "</p>";
+}
+
+//out1.innerHTML = resultText;
 //#4 =============
   //output.innerHTML += event.results[0][0].transcript.toUpperCase();
   //output.innerHTML += resultText;
