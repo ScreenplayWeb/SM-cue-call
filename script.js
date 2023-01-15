@@ -45,7 +45,9 @@ recog.onresult = function(event) {
   console.log(event);
 //=============#3
 var resultText = "";
-for (let i = 0; i < event.results.length; i++){
+var resultIndex = event.resultIndex;
+log("index " + resultIndex)
+/* for (let i = 0; i < event.results.length; i++){
     if(event.results[i].isFinal) {
         results.push(event.results[i][0].transcript);
         //resultText += event.results[i][0].transcript;
@@ -53,8 +55,26 @@ for (let i = 0; i < event.results.length; i++){
 }
 for (let i = 0; i < results.length; i++) {
     out1.innerHTML += "<p>" + results[i] + "</p>";
-}
+} */
+//Get text from results transcript
+let txText = event.results[resultIndex][0].transcript.toUpperCase();
+let txArray = txText.split(" ");
+let depIndex = txArray.indexOf("SOUND");
 
+//If it's a sound cue, notify the sound department
+if (depIndex !== -1) {
+    if (txArray[depIndex + 2] === "STANDBY" || txArray[depIndex + 2] === "STAND BY") {
+        callSXstandby(txArray[depIndex + 1]);
+    }
+    else if (txArray[depIndex + 2] === "GO") {
+        callSXcue(txArray[depIndex + 1]);
+    }
+    //log(txArray[depIndex + 2]);
+}
+//log(txArray);
+//log(depIndex);
+
+out1.innerHTML += "<p>" + event.results[resultIndex][0].transcript.toUpperCase() + "</p>";
 //out1.innerHTML = resultText;
 //#4 =============
   //output.innerHTML += event.results[0][0].transcript.toUpperCase();
