@@ -1,3 +1,7 @@
+//cues.js = SM cue functions
+//vox.js = Text to voice function speakThis(textIn, voxIndex)
+//testgui.js = Function testing app
+
 var results = [];
 
 function startListening(){
