@@ -6,7 +6,7 @@ var results = [];
 
 function startListening(){
     //if (document.getElementById("op_cont").checked === true) {
-        console.log("It's continuous");
+        //console.log("It's continuous");
         recog.continuous = true;
    // }
     // if (document.getElementById("op_intrm").checked === true) {
@@ -46,11 +46,11 @@ recog.onend = function() {
 }
 
 recog.onresult = function(event) { 
-  console.log(event);
+//console.log(event);
 //=============#3
 var resultText = "";
 var resultIndex = event.resultIndex;
-log("index " + resultIndex)
+//log("index " + resultIndex)
 /* for (let i = 0; i < event.results.length; i++){
     if(event.results[i].isFinal) {
         results.push(event.results[i][0].transcript);
@@ -63,18 +63,29 @@ for (let i = 0; i < results.length; i++) {
 //Get text from results transcript
 let txText = event.results[resultIndex][0].transcript.toUpperCase();
 let txArray = txText.split(" ");
-let depIndex = txArray.indexOf("SOUND");
+log(txArray);
 
-//If it's a sound cue, notify the sound department
-if (depIndex !== -1) {
-    if (txArray[depIndex + 2] === "STANDBY" || txArray[depIndex + 2] === "STAND BY") {
-        callSXstandby(txArray[depIndex + 1]);
+let sxIndex = txArray.indexOf("SOUND");
+let lxIndex = txArray.indexOf("LX");
+
+
+//====HANDLE SOUND CUES ====
+if (sxIndex !== -1) {
+    if (txArray.includes("STANDBY") || txArray.includes("STAND")) {
+        callSXstandby(txArray[sxIndex + 1]);
     }
-    else if (txArray[depIndex + 2] === "GO") {
-        callSXcue(txArray[depIndex + 1]);
+    else if (txArray[sxIndex + 2] === "GO") {
+        callSXcue(txArray[sxIndex + 1]);
     }
     //log(txArray[depIndex + 2]);
+} else if (lxIndex !== -1){
+//====HANDLE LIGHTING CUES ====
+    if (txArray.includes("STANDBY") || txArray.includes("STAND")) {
+        callLXstandby(txArray[sxIndex + 1]);
+    }
 }
+
+
 //log(txArray);
 //log(depIndex);
 
