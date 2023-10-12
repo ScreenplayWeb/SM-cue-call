@@ -33,7 +33,7 @@ function addGuiButton (id, btnTxt, func2call) {
 
 //==== CREATE BUTTON TO ADD TO THE GUI ====
 //addGuiButton( ID of Button, Text on Button, Name of function to call when clicked)
-addGuiButton("plA", "Click A", "lx1()");
+addGuiButton("plA", "Sound Q 1", "callSXcue('ONE')");
 addGuiButton("plB", "startListening", "startListening()");//
 addGuiButton("plC", "stopListening", "stopListening()");//
 addGuiButton("plD", "Voice LX", "speakThis('lights', 3)");//

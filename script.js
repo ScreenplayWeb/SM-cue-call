@@ -2,6 +2,11 @@
 //vox.js = Text to voice function speakThis(textIn, voxIndex)
 //testgui.js = Function testing app
 
+/*TODO
+-Understand speech input flow and design logic flow. See Cue-Model-v-1.0.xlsx
+*/
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+//console.log(SpeechRecognition);
 var results = [];
 
 function startListening(){
@@ -32,25 +37,25 @@ function stopListening(){
     
     
     //Voice recog
-    const recog = new webkitSpeechRecognition();
+    const recog = new SpeechRecognition();
     recog.lang = "en-US";
     
     // HANDLER FUNCTIONS ====================
     //recognition.onstart = function() { ... }    
     //recognition.onerror = function(event) { ... }
 recog.onend = function() {
-    console.log("END event");
+    log("END event");
     //startListen.style.backgroundColor = "";
     //startListen.style.color = "";
     //startListen.style.border = "";
 }
 
 recog.onresult = function(event) { 
-//console.log(event);
+console.log(event);
 //=============#3
 var resultText = "";
 var resultIndex = event.resultIndex;
-//log("index " + resultIndex)
+log("index " + resultIndex)
 /* for (let i = 0; i < event.results.length; i++){
     if(event.results[i].isFinal) {
         results.push(event.results[i][0].transcript);
@@ -66,7 +71,9 @@ let txArray = txText.split(" ");
 log(txArray);
 
 let sxIndex = txArray.indexOf("SOUND");
+console.log("sx index: " + sxIndex);
 let lxIndex = txArray.indexOf("LX");
+console.log("Lx index: " + lxIndex);
 
 
 //====HANDLE SOUND CUES ====
@@ -79,9 +86,10 @@ if (sxIndex !== -1) {
     }
     //log(txArray[depIndex + 2]);
 } else if (lxIndex !== -1){
+    log("LX cue!");
 //====HANDLE LIGHTING CUES ====
     if (txArray.includes("STANDBY") || txArray.includes("STAND")) {
-        callLXstandby(txArray[sxIndex + 1]);
+        callLXstandby(txArray[lxIndex + 1]);
     }
 }
 

@@ -13,7 +13,7 @@ const sound_1 = document.getElementById("sx1");
 
 //==== SOUND CUES
 function callSXstandby(q_num) {
-    speakThis('sound', 4)
+    speakThis('Sound', 5)
     //alert("Sound standing by");
 }
 
